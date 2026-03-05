@@ -4,9 +4,27 @@ English | [中文](./README.md)
 
 A curated list of resources for building **long-horizon agent execution harnesses**.
 
-The core goal is not only evaluation. It is to build an environment where LLM/VLM agents can run long tasks reliably, and when failures happen, recover through a closed loop of **environment + constraints + feedback**.
+The core is not only evaluation. The real goal is to build an environment where LLM/VLM agents can run long tasks reliably and recover from failures through a closed loop of **environment + constraints + feedback**.
 
 > Core reference: [Harness engineering: leveraging Codex in an agent-first world](https://openai.com/index/harness-engineering/)
+
+## How to Use This List
+
+1. If you are starting from scratch, follow this order:
+`Long-Horizon Execution Environments -> Constraints and Guardrails -> State, Checkpointing, and Recovery -> App Legibility and Observability -> Evaluation and Regression Loops`.
+2. If you already have an agent system, start from:
+`Evaluation and Regression Loops -> App Legibility and Observability -> Continuous Cleanup and Anti-Drift`.
+3. If you focus on risk control, prioritize:
+`Safety and Misuse Testing + Constraints and Guardrails`.
+
+## Inclusion Criteria
+
+Each entry should be directly useful for at least one of these goals:
+
+- Improve long-horizon task completion stability
+- Improve failure recovery speed and quality
+- Improve constraint enforcement and architecture legibility
+- Improve measurable feedback loops (quality, latency, cost, safety)
 
 ## Contents
 
@@ -22,65 +40,65 @@ The core goal is not only evaluation. It is to build an environment where LLM/VL
 
 ## Foundations
 
-- [OpenAI - Harness engineering: leveraging Codex in an agent-first world](https://openai.com/index/harness-engineering/) - Agent-first engineering model and operating lessons.
-- [openai/evals](https://github.com/openai/evals) - Reproducible model evaluation framework.
-- [Promptfoo](https://github.com/promptfoo/promptfoo) - Assertions, red-team checks, and CI-friendly eval workflows.
+- [OpenAI - Harness engineering: leveraging Codex in an agent-first world](https://openai.com/index/harness-engineering/) - Agent-first operating model. Why: defines the systems mindset.
+- [openai/evals](https://github.com/openai/evals) - Reproducible model eval framework. Why: baseline feedback loop.
+- [Promptfoo](https://github.com/promptfoo/promptfoo) - Assertions and red-team checks. Why: practical CI integration.
 
 ## Long-Horizon Execution Environments
 
-- [Docker](https://www.docker.com/) - Reproducible runtime packaging for agent tasks.
-- [Kubernetes](https://kubernetes.io/) - Isolation, scheduling, and lifecycle management for long-running workloads.
-- [Temporal](https://temporal.io/) - Durable workflow orchestration for long-running, failure-prone processes.
-- [LangGraph](https://github.com/langchain-ai/langgraph) - Stateful multi-step agent runtime with graph-based control flow.
-- [GitHub Actions](https://docs.github.com/actions) - CI execution substrate for repeatable agent loops.
+- [Docker](https://www.docker.com/) - Reproducible runtime packaging. Why: fewer environment-related failures.
+- [Kubernetes](https://kubernetes.io/) - Workload isolation and lifecycle control. Why: stable long-running execution.
+- [Temporal](https://temporal.io/) - Durable workflow orchestration. Why: built-in retries and continuation.
+- [LangGraph](https://github.com/langchain-ai/langgraph) - Stateful graph runtime for agents. Why: explicit multi-step control flow.
+- [GitHub Actions](https://docs.github.com/actions) - Standard automation substrate. Why: repeatable run-validate loops.
 
 ## Constraints and Guardrails
 
-- [AGENTS.md](https://agents.md/) - Repository-level operating constraints for agents.
-- [ESLint](https://eslint.org/) - Mechanical code quality and pattern enforcement.
-- [Semgrep](https://semgrep.dev/) - Custom static policies for architecture and safety constraints.
-- [dependency-cruiser](https://github.com/sverweij/dependency-cruiser) - Enforce layer boundaries and dependency direction.
-- [Zod](https://github.com/colinhacks/zod) - Runtime boundary validation for data contracts.
+- [AGENTS.md](https://agents.md/) - Repository-level agent constraints. Why: consistent operating instructions.
+- [ESLint](https://eslint.org/) - Static quality/pattern checks. Why: reduces drift in generated code.
+- [Semgrep](https://semgrep.dev/) - Custom policy rules. Why: encode architecture and safety invariants.
+- [dependency-cruiser](https://github.com/sverweij/dependency-cruiser) - Dependency boundary checks. Why: enforce layering contracts.
+- [Zod](https://github.com/colinhacks/zod) - Runtime schema validation. Why: safer boundary handling.
 
 ## State, Checkpointing, and Recovery
 
-- [PostgreSQL](https://www.postgresql.org/) - Durable state store for task progress and run metadata.
-- [Redis](https://redis.io/) - Fast ephemeral state, lock, and queue primitives.
-- [Celery](https://github.com/celery/celery) - Distributed task queue with retries and backoff.
-- [BullMQ](https://github.com/taskforcesh/bullmq) - Job queue for JS/TS stacks with retry semantics.
-- [Backoff](https://github.com/litl/backoff) - Retry/backoff primitives for resilient external calls.
+- [PostgreSQL](https://www.postgresql.org/) - Durable run/task state. Why: reliable recovery checkpoints.
+- [Redis](https://redis.io/) - Fast queues/locks/ephemeral state. Why: resilient coordination primitives.
+- [Celery](https://github.com/celery/celery) - Distributed task retries. Why: fault-tolerant async execution.
+- [BullMQ](https://github.com/taskforcesh/bullmq) - Queue + retry for JS/TS stacks. Why: recoverable job processing.
+- [Backoff](https://github.com/litl/backoff) - Retry/backoff primitives. Why: robust external API handling.
 
 ## App Legibility and Observability
 
-- [Chrome DevTools Protocol](https://chromedevtools.github.io/devtools-protocol/) - Programmatic browser introspection for UI validation.
-- [Playwright](https://playwright.dev/) - Deterministic browser automation with traces and screenshots.
-- [OpenTelemetry](https://opentelemetry.io/) - Unified tracing, metrics, and logs context.
-- [Prometheus](https://prometheus.io/) - Metrics collection and SLO checks.
-- [Grafana Loki](https://grafana.com/oss/loki/) - LogQL-based runtime diagnostics.
-- [Grafana Tempo](https://grafana.com/oss/tempo/) - Trace storage and trace-level debugging.
+- [Chrome DevTools Protocol](https://chromedevtools.github.io/devtools-protocol/) - Programmatic browser introspection. Why: agent-visible UI behavior.
+- [Playwright](https://playwright.dev/) - Deterministic browser automation and traces. Why: reproducible UI validation.
+- [OpenTelemetry](https://opentelemetry.io/) - Unified traces/metrics/logs context. Why: root-cause feedback loop.
+- [Prometheus](https://prometheus.io/) - Metrics and SLO checks. Why: measurable runtime quality.
+- [Grafana Loki](https://grafana.com/oss/loki/) - LogQL diagnostics. Why: structured failure triage.
+- [Grafana Tempo](https://grafana.com/oss/tempo/) - Trace-level debugging. Why: cross-service failure analysis.
 
 ## Evaluation and Regression Loops
 
-- [pytest](https://docs.pytest.org/) - Execution layer for smoke and regression suites.
-- [pytest-benchmark](https://github.com/ionelmc/pytest-benchmark) - Performance regression checks.
-- [LangSmith Evaluations](https://docs.smith.langchain.com/evaluation) - Dataset + run + evaluator workflows.
-- [DeepEval](https://github.com/confident-ai/deepeval) - Test-case abstractions and LLM assertions.
-- [RAGAS](https://github.com/explodinggradients/ragas) - Retrieval-oriented evaluation metrics.
+- [pytest](https://docs.pytest.org/) - Smoke/regression execution layer. Why: fast test orchestration.
+- [pytest-benchmark](https://github.com/ionelmc/pytest-benchmark) - Performance regression checks. Why: protect latency budgets.
+- [LangSmith Evaluations](https://docs.smith.langchain.com/evaluation) - Dataset + run + evaluator pipeline. Why: consistent eval operations.
+- [DeepEval](https://github.com/confident-ai/deepeval) - LLM test-case abstractions. Why: reusable quality assertions.
+- [RAGAS](https://github.com/explodinggradients/ragas) - Retrieval quality metrics. Why: objective RAG feedback.
 
 ## Safety and Misuse Testing
 
-- [PyRIT](https://github.com/Azure/PyRIT) - Red-team toolkit for generative AI systems.
-- [Garak](https://github.com/NVIDIA/garak) - Probe-based LLM vulnerability scanner.
-- [SafeArena (paper)](https://arxiv.org/abs/2503.04957) - Harmfulness benchmark for web agents.
-- [OS-Harm (paper)](https://arxiv.org/abs/2506.14866) - Harm and misuse testing for OS-level agents.
-- [CUAHarm (paper)](https://arxiv.org/abs/2508.00935) - Harmful task execution benchmark for computer-use agents.
+- [PyRIT](https://github.com/Azure/PyRIT) - Generative AI red-team toolkit. Why: offensive testing workflow.
+- [Garak](https://github.com/NVIDIA/garak) - Probe-based vulnerability scanner. Why: broad misuse surface checks.
+- [SafeArena (paper)](https://arxiv.org/abs/2503.04957) - Web-agent harmfulness benchmark. Why: concrete harmful-task coverage.
+- [OS-Harm (paper)](https://arxiv.org/abs/2506.14866) - OS-level harm benchmark. Why: computer-use risk validation.
+- [CUAHarm (paper)](https://arxiv.org/abs/2508.00935) - Harmful task execution benchmark. Why: execution-level safety measurement.
 
 ## Continuous Cleanup and Anti-Drift
 
-- [Renovate](https://github.com/renovatebot/renovate) - Automated dependency updates via PRs.
-- [Ruff](https://github.com/astral-sh/ruff) - Fast lint/format checks for recurring cleanup loops.
-- [Biome](https://github.com/biomejs/biome) - Unified formatter/linter for JS/TS codebases.
-- [SonarQube](https://www.sonarsource.com/products/sonarqube/) - Long-horizon code quality trend tracking.
+- [Renovate](https://github.com/renovatebot/renovate) - Automated dependency upkeep. Why: reduce maintenance entropy.
+- [Ruff](https://github.com/astral-sh/ruff) - Fast Python lint/format. Why: low-cost continuous cleanup.
+- [Biome](https://github.com/biomejs/biome) - JS/TS formatter+linter. Why: consistent code generation outcomes.
+- [SonarQube](https://www.sonarsource.com/products/sonarqube/) - Long-term quality trend tracking. Why: early drift detection.
 
 ## Contributing
 
@@ -88,11 +106,11 @@ Contributions are welcome.
 
 Format:
 
-- `- [Name](link) - short description`
+- `- [Name](link) - short description. Why: value for long-horizon harnesses.`
 
 Rules:
 
 - Keep entries directly relevant to long-horizon agent harness engineering.
 - Prefer primary sources (official docs, original repos, primary papers).
-- Avoid duplicate or marketing-heavy entries.
+- Avoid duplicates and marketing-heavy entries.
 - Keep descriptions concise and factual.
