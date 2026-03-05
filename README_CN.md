@@ -2,105 +2,94 @@
 
 [English](./README.md) | 中文
 
-面向 LLM 与 Agent 系统的评测 harness 资源、框架、数据集与实践指南精选清单。
+聚焦 **agent-first harness engineering** 的精选清单：通过环境、约束与反馈闭环设计，让编码 Agent 能稳定地构建、测试、评审与交付。
 
-Harness engineering 的核心是运行可复现、接近生产环境的评测，让团队在质量、安全、时延、成本上更快迭代且更少回归。
+> 核心参考： [Harness engineering: leveraging Codex in an agent-first world](https://openai.com/index/harness-engineering/)
 
 ## 目录
 
 - [基础方法](#基础方法)
-- [通用评测框架](#通用评测框架)
-- [Agent 与浏览器环境](#agent-与浏览器环境)
-- [基准测试](#基准测试)
-- [安全与有害性评测](#安全与有害性评测)
-- [可观测性与报告](#可观测性与报告)
-- [CI 与回归流程](#ci-与回归流程)
-- [快速落地蓝图](#快速落地蓝图)
+- [Agent-First 工作流](#agent-first-工作流)
+- [仓库作为事实系统](#仓库作为事实系统)
+- [架构与不变量约束](#架构与不变量约束)
+- [应用可读性与可观测性](#应用可读性与可观测性)
+- [评测与回归闭环](#评测与回归闭环)
+- [安全与滥用测试](#安全与滥用测试)
+- [持续清理与反漂移](#持续清理与反漂移)
 - [贡献指南](#贡献指南)
 
 ## 基础方法
 
-- [OpenAI - Harness Engineering](https://openai.com/index/harness-engineering/) - 设计与运营评测 harness 的实践方法论。
-- [openai/evals](https://github.com/openai/evals) - 模型评测的开源框架与示例。
-- [Promptfoo](https://github.com/promptfoo/promptfoo) - 支持断言、红队检查与 CI 集成的提示词与模型评测工具。
+- [OpenAI - Harness engineering: leveraging Codex in an agent-first world](https://openai.com/index/harness-engineering/) - 核心工作范式：人类负责引导，Agent 负责执行。
+- [openai/evals](https://github.com/openai/evals) - 可复现模型评测的开源框架。
+- [Promptfoo](https://github.com/promptfoo/promptfoo) - 支持断言、红队检查和 CI 集成的评测工作流。
 
-## 通用评测框架
+## Agent-First 工作流
 
-- [Confident AI DeepEval](https://github.com/confident-ai/deepeval) - 具备测试样例抽象能力的端到端 LLM 评测框架。
-- [TruLens](https://github.com/truera/trulens) - 面向 LLM 应用的可观测与评测工具。
-- [RAGAS](https://github.com/explodinggradients/ragas) - 以指标为中心的 RAG 评测框架。
-- [LangSmith Evaluations](https://docs.smith.langchain.com/evaluation) - 覆盖数据集、运行与评估器工作流的评测平台。
-- [MLflow Evaluation](https://mlflow.org/docs/latest/llms/llm-evaluate/index.html) - 统一追踪与评测流水线。
+- [GitHub CLI](https://cli.github.com/) - 用脚本化方式驱动 PR 生命周期，适配 Agent 迭代。
+- [GitHub Actions](https://docs.github.com/actions) - 自动化 run-validate-patch 循环的 CI 基础设施。
+- [pre-commit](https://pre-commit.com/) - 在提交前执行基线检查，减少无效 CI 轮次。
+- [Reviewdog](https://github.com/reviewdog/reviewdog) - 将 lint/test 反馈转为评审评论，便于 Agent 修复。
 
-## Agent 与浏览器环境
+## 仓库作为事实系统
 
-- [BrowserGym](https://github.com/ServiceNow/BrowserGym) - 浏览器 Agent 基准测试的统一环境层。
-- [WebArena](https://github.com/web-arena-x/webarena) - 面向自主网页 Agent 的真实任务环境。
-- [VisualWebArena](https://github.com/web-arena-x/visualwebarena) - WebArena 的多模态扩展版本。
-- [OSWorld](https://github.com/xlang-ai/OSWorld) - 面向 computer-use agent 的桌面与操作系统级环境。
-- [MiniWoB++](https://github.com/Farama-Foundation/miniwob-plusplus) - 轻量级网页任务环境，适合快速迭代与调试。
+- [AGENTS.md](https://agents.md/) - 仓库级 Agent 指令约定。
+- [MkDocs Material](https://github.com/squidfunk/mkdocs-material) - 构建可版本化、可检索的知识库文档。
+- [Docusaurus](https://docusaurus.io/) - 适合长期维护的架构与产品文档系统。
+- [markdownlint](https://github.com/DavidAnson/markdownlint) - 统一 Markdown 文档质量。
+- [lychee](https://github.com/lycheeverse/lychee) - 文档链接检查，降低失效引用风险。
 
-## 基准测试
+## 架构与不变量约束
 
-- [SWE-bench](https://github.com/SWE-bench/SWE-bench) - 基于真实 GitHub issue 的代码 Agent 基准。
-- [GAIA](https://huggingface.co/gaia-benchmark) - 强调多步推理与工具使用的通用助手基准。
-- [AgentBench](https://github.com/THUDM/AgentBench) - 覆盖多环境的 Agent 基准套件。
-- [WebArena Leaderboard](https://webarena.dev/) - Web Agent 公共排行榜与基准资源。
+- [ESLint](https://eslint.org/) - 约束 JS/TS 代码质量与结构规范。
+- [dependency-cruiser](https://github.com/sverweij/dependency-cruiser) - 强制依赖方向与分层边界规则。
+- [Semgrep](https://semgrep.dev/) - 自定义结构/安全规则并机械化执行。
+- [mypy](https://github.com/python/mypy) - Python 类型边界不变量约束。
+- [Zod](https://github.com/colinhacks/zod) - 在服务/API 边界做运行时 schema 校验。
 
-## 安全与有害性评测
+## 应用可读性与可观测性
 
-- [SafeArena (paper)](https://arxiv.org/abs/2503.04957) - 面向 Web Agent 的有害性评测基准。
-- [OS-Harm (paper)](https://arxiv.org/abs/2506.14866) - 面向 OS-level computer-use agent 的有害与滥用评测。
-- [CUAHarm (paper)](https://arxiv.org/abs/2508.00935) - 评测 computer-use agent 执行有害任务能力的基准。
-- [microsoft/PyRIT](https://github.com/Azure/PyRIT) - 生成式 AI 红队测试工具包。
-- [NVIDIA Garak](https://github.com/NVIDIA/garak) - LLM 漏洞扫描工具，支持多类探针和检测器。
+- [Chrome DevTools Protocol](https://chromedevtools.github.io/devtools-protocol/) - 程序化浏览器观测，用于 UI 验证闭环。
+- [Playwright](https://playwright.dev/) - 浏览器自动化、截图和 trace 采集。
+- [OpenTelemetry](https://opentelemetry.io/) - 统一 traces/metrics/logs 关联分析。
+- [Prometheus](https://prometheus.io/) - 指标采集与时延/SLO 检查。
+- [Grafana Loki](https://grafana.com/oss/loki/) - 支持 LogQL 的日志查询系统。
+- [Grafana Tempo](https://grafana.com/oss/tempo/) - 面向 TraceQL 场景的链路追踪存储。
 
-## 可观测性与报告
+## 评测与回归闭环
 
-- [Langfuse](https://github.com/langfuse/langfuse) - 面向 LLM trace 与评测的开源可观测平台。
-- [Weights & Biases Weave](https://wandb.ai/site/weave/) - LLM 应用的追踪、对比与评测工具。
-- [Arize Phoenix](https://github.com/Arize-ai/phoenix) - 面向 RAG 与 Agent 系统的追踪与评测工具。
+- [pytest](https://docs.pytest.org/) - 冒烟/回归套件的执行层。
+- [pytest-benchmark](https://github.com/ionelmc/pytest-benchmark) - 性能回归跟踪。
+- [LangSmith Evaluations](https://docs.smith.langchain.com/evaluation) - 数据集、运行与评估器工作流。
+- [DeepEval](https://github.com/confident-ai/deepeval) - LLM 测试样例抽象与断言体系。
+- [RAGAS](https://github.com/explodinggradients/ragas) - 面向检索增强系统的质量指标。
 
-## CI 与回归流程
+## 安全与滥用测试
 
-- [GitHub Actions](https://docs.github.com/actions) - 常用 CI 平台，用于自动化执行 harness。
-- [pytest](https://docs.pytest.org/) - 常作为评测套件执行层的测试框架。
-- [pytest-benchmark](https://github.com/ionelmc/pytest-benchmark) - 用于时延敏感场景的性能回归检查。
+- [PyRIT](https://github.com/Azure/PyRIT) - 生成式 AI 红队测试工具。
+- [Garak](https://github.com/NVIDIA/garak) - 模块化探针驱动的 LLM 漏洞扫描工具。
+- [SafeArena (paper)](https://arxiv.org/abs/2503.04957) - Web Agent 有害性基准。
+- [OS-Harm (paper)](https://arxiv.org/abs/2506.14866) - OS 级 Agent 有害与滥用评测。
+- [CUAHarm (paper)](https://arxiv.org/abs/2508.00935) - computer-use agent 有害任务执行基准。
 
-## 快速落地蓝图
+## 持续清理与反漂移
 
-一个最小可用 harness 栈应包含：
-
-- `datasets/`: 冒烟、回归、对抗评测集
-- `runner/`: 执行与轨迹采集
-- `judges/`: 规则判分与模型判分
-- `reports/`: 指标汇总与失败对比
-
-建议持续追踪的核心指标：
-
-- `task_success_rate`（任务完成率）
-- `critical_error_rate`（关键错误率）
-- `safety_violation_rate`（安全违规率）
-- `latency_p50/p95`（时延分位）
-- `cost_per_task`（单任务成本）
-- `regression_delta`（相对基线回归变化）
-
-推荐评测循环：
-
-1. 先跑 `smoke` 冒烟集，快速给 PR 反馈。
-2. 再跑 `regression` 回归集，覆盖已知失败模式。
-3. 发布前用质量、安全、时延、成本阈值做 gate。
+- [Renovate](https://github.com/renovatebot/renovate) - 通过自动 PR 持续维护依赖。
+- [Ruff](https://github.com/astral-sh/ruff) - 高性能 Python lint/format，适合周期性清理任务。
+- [Biome](https://github.com/biomejs/biome) - JS/TS 统一格式化与静态检查工具。
+- [SonarQube](https://www.sonarsource.com/products/sonarqube/) - 长周期代码质量趋势与问题监控。
 
 ## 贡献指南
 
 欢迎贡献。
 
-请遵循以下规则：
+请使用以下格式：
 
-- 仅添加与 harness engineering 或评测运营直接相关的资源。
-- 使用统一格式：`- [Name](link) - short description`。
-- 描述要客观且简洁。
-- 避免重复链接与营销化描述。
-- 论文优先使用 arXiv 或主发布页面链接。
+- `- [Name](link) - short description`
 
-如果不确定资源是否合适，请先提 issue 讨论。
+规则：
+
+- 仅收录与 agent-first harness engineering 直接相关的条目。
+- 优先官方文档、原始仓库、论文主来源。
+- 避免重复和营销化描述。
+- 描述保持简洁、客观。
