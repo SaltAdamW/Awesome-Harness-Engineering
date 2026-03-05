@@ -2,105 +2,94 @@
 
 English | [中文](./README_CN.md)
 
-A curated list of resources, frameworks, datasets, and practical guides for building evaluation harnesses for LLM and agent systems.
+A curated list of resources for **agent-first harness engineering**: designing environments, constraints, and feedback loops so coding agents can build, test, review, and ship reliably.
 
-Harness engineering is about running repeatable, production-like evaluations so teams can ship faster with fewer regressions in quality, safety, latency, and cost.
+> Core reference: [Harness engineering: leveraging Codex in an agent-first world](https://openai.com/index/harness-engineering/)
 
 ## Contents
 
 - [Foundations](#foundations)
-- [General Eval Frameworks](#general-eval-frameworks)
-- [Agent and Browser Environments](#agent-and-browser-environments)
-- [Benchmarks](#benchmarks)
-- [Safety and Harmfulness](#safety-and-harmfulness)
-- [Observability and Reporting](#observability-and-reporting)
-- [CI and Regression Workflows](#ci-and-regression-workflows)
-- [Quick Start Blueprint](#quick-start-blueprint)
+- [Agent-First Workflow](#agent-first-workflow)
+- [Repository as System of Record](#repository-as-system-of-record)
+- [Architecture and Invariant Enforcement](#architecture-and-invariant-enforcement)
+- [App Legibility and Observability](#app-legibility-and-observability)
+- [Evaluation and Regression Loops](#evaluation-and-regression-loops)
+- [Safety and Misuse Testing](#safety-and-misuse-testing)
+- [Continuous Cleanup and Anti-Drift](#continuous-cleanup-and-anti-drift)
 - [Contributing](#contributing)
 
 ## Foundations
 
-- [OpenAI - Harness Engineering](https://openai.com/index/harness-engineering/) - Practical methodology for designing and operating eval harnesses.
-- [openai/evals](https://github.com/openai/evals) - Open-source framework and examples for model evaluation.
-- [Promptfoo](https://github.com/promptfoo/promptfoo) - Prompt and model evals with assertions, red-team checks, and CI integration.
+- [OpenAI - Harness engineering: leveraging Codex in an agent-first world](https://openai.com/index/harness-engineering/) - The core operating model: humans steer, agents execute.
+- [openai/evals](https://github.com/openai/evals) - Open-source framework for reproducible model evaluations.
+- [Promptfoo](https://github.com/promptfoo/promptfoo) - Prompt/model assertions, red-team checks, and CI-friendly eval workflows.
 
-## General Eval Frameworks
+## Agent-First Workflow
 
-- [Confident AI DeepEval](https://github.com/confident-ai/deepeval) - End-to-end LLM evaluation framework with test-case abstractions.
-- [TruLens](https://github.com/truera/trulens) - Instrumentation and evaluation for LLM applications.
-- [RAGAS](https://github.com/explodinggradients/ragas) - Metrics-focused evaluation for RAG pipelines.
-- [LangSmith Evaluations](https://docs.smith.langchain.com/evaluation) - Dataset, run, and evaluator workflows for LLM apps.
-- [MLflow Evaluation](https://mlflow.org/docs/latest/llms/llm-evaluate/index.html) - Unified tracking and evaluation pipelines for LLM systems.
+- [GitHub CLI](https://cli.github.com/) - Scriptable PR lifecycle for agent-driven implementation/review loops.
+- [GitHub Actions](https://docs.github.com/actions) - CI backbone for automated run-validate-patch loops.
+- [pre-commit](https://pre-commit.com/) - Enforce baseline checks before agent commits hit CI.
+- [Reviewdog](https://github.com/reviewdog/reviewdog) - Surface linter/test feedback as review comments.
 
-## Agent and Browser Environments
+## Repository as System of Record
 
-- [BrowserGym](https://github.com/ServiceNow/BrowserGym) - Unified environment layer for browser-based agent benchmarks.
-- [WebArena](https://github.com/web-arena-x/webarena) - Realistic web task environment for autonomous web agents.
-- [VisualWebArena](https://github.com/web-arena-x/visualwebarena) - Multimodal extension of WebArena for visual reasoning on webpages.
-- [OSWorld](https://github.com/xlang-ai/OSWorld) - Desktop/OS-level benchmark environment for computer-use agents.
-- [MiniWoB++](https://github.com/Farama-Foundation/miniwob-plusplus) - Lightweight browser tasks for rapid iteration and debugging.
+- [AGENTS.md](https://agents.md/) - Shared convention for repository-level agent instructions.
+- [MkDocs Material](https://github.com/squidfunk/mkdocs-material) - Versioned, searchable docs for agent-readable knowledge bases.
+- [Docusaurus](https://docusaurus.io/) - Structured docs system for long-lived architectural and product knowledge.
+- [markdownlint](https://github.com/DavidAnson/markdownlint) - Enforce consistent markdown quality in repo-native docs.
+- [lychee](https://github.com/lycheeverse/lychee) - Link checking to prevent stale documentation references.
 
-## Benchmarks
+## Architecture and Invariant Enforcement
 
-- [SWE-bench](https://github.com/SWE-bench/SWE-bench) - Real GitHub issue resolution benchmark for coding agents.
-- [GAIA](https://huggingface.co/gaia-benchmark) - General assistant benchmark with multi-step reasoning and tool use.
-- [AgentBench](https://github.com/THUDM/AgentBench) - Multi-environment benchmark suite for LLM-based agents.
-- [WebArena Leaderboard](https://webarena.dev/) - Public leaderboard and benchmark artifacts for web agents.
+- [ESLint](https://eslint.org/) - Enforce code quality and structural conventions in JS/TS repositories.
+- [dependency-cruiser](https://github.com/sverweij/dependency-cruiser) - Enforce import boundaries and layer direction rules.
+- [Semgrep](https://semgrep.dev/) - Custom structural/security rules that agents can mechanically satisfy.
+- [mypy](https://github.com/python/mypy) - Type invariants for Python boundaries.
+- [Zod](https://github.com/colinhacks/zod) - Runtime schema validation at service/API boundaries.
 
-## Safety and Harmfulness
+## App Legibility and Observability
 
-- [SafeArena (paper)](https://arxiv.org/abs/2503.04957) - Web-agent harmfulness benchmark with safe and harmful task splits.
-- [OS-Harm (paper)](https://arxiv.org/abs/2506.14866) - Harm and misuse evaluation for OS-level computer-use agents.
-- [CUAHarm (paper)](https://arxiv.org/abs/2508.00935) - Benchmark for harmful task execution in computer-use agents.
-- [microsoft/PyRIT](https://github.com/Azure/PyRIT) - Open-source toolkit for red teaming generative AI systems.
-- [NVIDIA Garak](https://github.com/NVIDIA/garak) - LLM vulnerability scanner with plug-in probes and detectors.
+- [Chrome DevTools Protocol](https://chromedevtools.github.io/devtools-protocol/) - Programmatic browser introspection for UI validation loops.
+- [Playwright](https://playwright.dev/) - Automated browser workflows with traces and screenshots.
+- [OpenTelemetry](https://opentelemetry.io/) - Standardized traces/metrics/log correlation for agent debugging.
+- [Prometheus](https://prometheus.io/) - Metrics backend for SLO and latency checks.
+- [Grafana Loki](https://grafana.com/oss/loki/) - LogQL-capable log querying for runtime diagnosis.
+- [Grafana Tempo](https://grafana.com/oss/tempo/) - Trace storage and TraceQL-style investigations.
 
-## Observability and Reporting
+## Evaluation and Regression Loops
 
-- [Langfuse](https://github.com/langfuse/langfuse) - Open-source observability platform for LLM traces and evals.
-- [Weights & Biases Weave](https://wandb.ai/site/weave/) - Tracking, comparison, and evaluation tooling for LLM apps.
-- [Arize Phoenix](https://github.com/Arize-ai/phoenix) - Tracing and evaluation for RAG and agent systems.
+- [pytest](https://docs.pytest.org/) - Execution layer for smoke/regression suites.
+- [pytest-benchmark](https://github.com/ionelmc/pytest-benchmark) - Performance regression tracking.
+- [LangSmith Evaluations](https://docs.smith.langchain.com/evaluation) - Dataset + run + evaluator workflows.
+- [DeepEval](https://github.com/confident-ai/deepeval) - LLM test case abstractions and assertions.
+- [RAGAS](https://github.com/explodinggradients/ragas) - Retrieval-focused quality metrics.
 
-## CI and Regression Workflows
+## Safety and Misuse Testing
 
-- [GitHub Actions](https://docs.github.com/actions) - Common CI platform for automated harness runs.
-- [pytest](https://docs.pytest.org/) - Test runner often used as the base execution layer for eval suites.
-- [pytest-benchmark](https://github.com/ionelmc/pytest-benchmark) - Performance regression checks for latency-sensitive workloads.
+- [PyRIT](https://github.com/Azure/PyRIT) - Red-team toolkit for generative AI systems.
+- [Garak](https://github.com/NVIDIA/garak) - LLM vulnerability scanning with modular probes.
+- [SafeArena (paper)](https://arxiv.org/abs/2503.04957) - Harmfulness benchmark for web agents.
+- [OS-Harm (paper)](https://arxiv.org/abs/2506.14866) - Harm and misuse testing for OS-level agents.
+- [CUAHarm (paper)](https://arxiv.org/abs/2508.00935) - Harmful task execution benchmark for computer-use agents.
 
-## Quick Start Blueprint
+## Continuous Cleanup and Anti-Drift
 
-A minimal harness stack should include:
-
-- `datasets/`: smoke, regression, and adversarial suites
-- `runner/`: execution and trace capture
-- `judges/`: rule-based and model-based scoring
-- `reports/`: metric summaries and failure diffs
-
-Core metrics to track:
-
-- `task_success_rate`
-- `critical_error_rate`
-- `safety_violation_rate`
-- `latency_p50/p95`
-- `cost_per_task`
-- `regression_delta`
-
-Recommended evaluation loop:
-
-1. Run `smoke` suite for fast PR feedback.
-2. Run `regression` suite for known failure coverage.
-3. Enforce release gates on quality, safety, latency, and cost.
+- [Renovate](https://github.com/renovatebot/renovate) - Continuous dependency maintenance via automated PRs.
+- [Ruff](https://github.com/astral-sh/ruff) - Fast Python lint/format checks for recurring cleanup loops.
+- [Biome](https://github.com/biomejs/biome) - Unified formatter/linter for JS/TS repositories.
+- [SonarQube](https://www.sonarsource.com/products/sonarqube/) - Long-horizon code health and issue trend monitoring.
 
 ## Contributing
 
 Contributions are welcome.
 
-Please follow these rules:
+Please follow this format:
 
-- Add resources directly related to harness engineering or eval operations.
-- Use this format: `- [Name](link) - short description`.
-- Keep descriptions factual and concise.
-- Avoid duplicate links and marketing-heavy entries.
-- For papers, prefer arXiv or primary publication pages.
+- `- [Name](link) - short description`
 
-If you are unsure whether an entry fits, open an issue first.
+Guidelines:
+
+- Keep entries directly relevant to agent-first harness engineering.
+- Prefer primary sources (official docs, original repos, primary papers).
+- Avoid duplicate or marketing-heavy entries.
+- Keep descriptions concise and factual.
