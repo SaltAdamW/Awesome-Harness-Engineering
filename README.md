@@ -1,98 +1,98 @@
 # Awesome Harness Engineering [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
 
-English | [中文](./README_CN.md)
+[English](./README_EN.md) | 中文
 
-A curated list of resources for building **long-horizon agent execution harnesses**.
+面向 **长程任务执行（long-horizon）Agent Harness** 的精选清单。
 
-The core goal is not only evaluation. It is to build an environment where LLM/VLM agents can run long tasks reliably, and when failures happen, recover through a closed loop of **environment + constraints + feedback**.
+核心不只是评测，而是构建一套环境，让 LLM/VLM 在长程任务中稳定运行；当出错时，依靠 **环境 + 约束 + 反馈** 的闭环完成恢复与收敛。
 
-> Core reference: [Harness engineering: leveraging Codex in an agent-first world](https://openai.com/index/harness-engineering/)
+> 核心参考： [Harness engineering: leveraging Codex in an agent-first world](https://openai.com/index/harness-engineering/)
 
-## Contents
+## 目录
 
-- [Foundations](#foundations)
-- [Long-Horizon Execution Environments](#long-horizon-execution-environments)
-- [Constraints and Guardrails](#constraints-and-guardrails)
-- [State, Checkpointing, and Recovery](#state-checkpointing-and-recovery)
-- [App Legibility and Observability](#app-legibility-and-observability)
-- [Evaluation and Regression Loops](#evaluation-and-regression-loops)
-- [Safety and Misuse Testing](#safety-and-misuse-testing)
-- [Continuous Cleanup and Anti-Drift](#continuous-cleanup-and-anti-drift)
-- [Contributing](#contributing)
+- [基础方法](#基础方法)
+- [长程任务执行环境](#长程任务执行环境)
+- [约束与护栏](#约束与护栏)
+- [状态、检查点与恢复](#状态检查点与恢复)
+- [应用可读性与可观测性](#应用可读性与可观测性)
+- [评测与回归闭环](#评测与回归闭环)
+- [安全与滥用测试](#安全与滥用测试)
+- [持续清理与反漂移](#持续清理与反漂移)
+- [贡献指南](#贡献指南)
 
-## Foundations
+## 基础方法
 
-- [OpenAI - Harness engineering: leveraging Codex in an agent-first world](https://openai.com/index/harness-engineering/) - Agent-first engineering model and operating lessons.
-- [openai/evals](https://github.com/openai/evals) - Reproducible model evaluation framework.
-- [Promptfoo](https://github.com/promptfoo/promptfoo) - Assertions, red-team checks, and CI-friendly eval workflows.
+- [OpenAI - Harness engineering: leveraging Codex in an agent-first world](https://openai.com/index/harness-engineering/) - Agent-first 工程范式与实践经验。
+- [openai/evals](https://github.com/openai/evals) - 可复现模型评测框架。
+- [Promptfoo](https://github.com/promptfoo/promptfoo) - 支持断言、红队和 CI 集成的评测流程。
 
-## Long-Horizon Execution Environments
+## 长程任务执行环境
 
-- [Docker](https://www.docker.com/) - Reproducible runtime packaging for agent tasks.
-- [Kubernetes](https://kubernetes.io/) - Isolation, scheduling, and lifecycle management for long-running workloads.
-- [Temporal](https://temporal.io/) - Durable workflow orchestration for long-running, failure-prone processes.
-- [LangGraph](https://github.com/langchain-ai/langgraph) - Stateful multi-step agent runtime with graph-based control flow.
-- [GitHub Actions](https://docs.github.com/actions) - CI execution substrate for repeatable agent loops.
+- [Docker](https://www.docker.com/) - 为 Agent 任务提供可复现运行环境。
+- [Kubernetes](https://kubernetes.io/) - 长任务的隔离、调度与生命周期管理。
+- [Temporal](https://temporal.io/) - 面向长流程和失败场景的持久化编排引擎。
+- [LangGraph](https://github.com/langchain-ai/langgraph) - 支持状态化多步控制流的 Agent 运行时。
+- [GitHub Actions](https://docs.github.com/actions) - 可重复的自动化执行基座。
 
-## Constraints and Guardrails
+## 约束与护栏
 
-- [AGENTS.md](https://agents.md/) - Repository-level operating constraints for agents.
-- [ESLint](https://eslint.org/) - Mechanical code quality and pattern enforcement.
-- [Semgrep](https://semgrep.dev/) - Custom static policies for architecture and safety constraints.
-- [dependency-cruiser](https://github.com/sverweij/dependency-cruiser) - Enforce layer boundaries and dependency direction.
-- [Zod](https://github.com/colinhacks/zod) - Runtime boundary validation for data contracts.
+- [AGENTS.md](https://agents.md/) - 仓库级 Agent 约束与协作约定。
+- [ESLint](https://eslint.org/) - 机械化代码质量与模式约束。
+- [Semgrep](https://semgrep.dev/) - 可定制静态策略（架构/安全）。
+- [dependency-cruiser](https://github.com/sverweij/dependency-cruiser) - 约束依赖方向与分层边界。
+- [Zod](https://github.com/colinhacks/zod) - 数据边界的运行时契约校验。
 
-## State, Checkpointing, and Recovery
+## 状态、检查点与恢复
 
-- [PostgreSQL](https://www.postgresql.org/) - Durable state store for task progress and run metadata.
-- [Redis](https://redis.io/) - Fast ephemeral state, lock, and queue primitives.
-- [Celery](https://github.com/celery/celery) - Distributed task queue with retries and backoff.
-- [BullMQ](https://github.com/taskforcesh/bullmq) - Job queue for JS/TS stacks with retry semantics.
-- [Backoff](https://github.com/litl/backoff) - Retry/backoff primitives for resilient external calls.
+- [PostgreSQL](https://www.postgresql.org/) - 任务进度与运行元数据的持久化存储。
+- [Redis](https://redis.io/) - 临时状态、锁与队列原语。
+- [Celery](https://github.com/celery/celery) - 带重试与退避能力的分布式任务队列。
+- [BullMQ](https://github.com/taskforcesh/bullmq) - JS/TS 任务队列与重试机制。
+- [Backoff](https://github.com/litl/backoff) - 外部调用失败时的退避重试策略。
 
-## App Legibility and Observability
+## 应用可读性与可观测性
 
-- [Chrome DevTools Protocol](https://chromedevtools.github.io/devtools-protocol/) - Programmatic browser introspection for UI validation.
-- [Playwright](https://playwright.dev/) - Deterministic browser automation with traces and screenshots.
-- [OpenTelemetry](https://opentelemetry.io/) - Unified tracing, metrics, and logs context.
-- [Prometheus](https://prometheus.io/) - Metrics collection and SLO checks.
-- [Grafana Loki](https://grafana.com/oss/loki/) - LogQL-based runtime diagnostics.
-- [Grafana Tempo](https://grafana.com/oss/tempo/) - Trace storage and trace-level debugging.
+- [Chrome DevTools Protocol](https://chromedevtools.github.io/devtools-protocol/) - 程序化浏览器观测，用于 UI 验证。
+- [Playwright](https://playwright.dev/) - 可重复的浏览器自动化、截图与 trace。
+- [OpenTelemetry](https://opentelemetry.io/) - traces/metrics/logs 统一上下文。
+- [Prometheus](https://prometheus.io/) - 指标采集与 SLO 检查。
+- [Grafana Loki](https://grafana.com/oss/loki/) - 基于 LogQL 的日志诊断。
+- [Grafana Tempo](https://grafana.com/oss/tempo/) - 链路追踪存储与追踪级调试。
 
-## Evaluation and Regression Loops
+## 评测与回归闭环
 
-- [pytest](https://docs.pytest.org/) - Execution layer for smoke and regression suites.
-- [pytest-benchmark](https://github.com/ionelmc/pytest-benchmark) - Performance regression checks.
-- [LangSmith Evaluations](https://docs.smith.langchain.com/evaluation) - Dataset + run + evaluator workflows.
-- [DeepEval](https://github.com/confident-ai/deepeval) - Test-case abstractions and LLM assertions.
-- [RAGAS](https://github.com/explodinggradients/ragas) - Retrieval-oriented evaluation metrics.
+- [pytest](https://docs.pytest.org/) - 冒烟与回归套件执行层。
+- [pytest-benchmark](https://github.com/ionelmc/pytest-benchmark) - 性能回归检查。
+- [LangSmith Evaluations](https://docs.smith.langchain.com/evaluation) - 数据集、运行、评估器工作流。
+- [DeepEval](https://github.com/confident-ai/deepeval) - LLM 测试样例抽象与断言。
+- [RAGAS](https://github.com/explodinggradients/ragas) - 检索场景质量指标。
 
-## Safety and Misuse Testing
+## 安全与滥用测试
 
-- [PyRIT](https://github.com/Azure/PyRIT) - Red-team toolkit for generative AI systems.
-- [Garak](https://github.com/NVIDIA/garak) - Probe-based LLM vulnerability scanner.
-- [SafeArena (paper)](https://arxiv.org/abs/2503.04957) - Harmfulness benchmark for web agents.
-- [OS-Harm (paper)](https://arxiv.org/abs/2506.14866) - Harm and misuse testing for OS-level agents.
-- [CUAHarm (paper)](https://arxiv.org/abs/2508.00935) - Harmful task execution benchmark for computer-use agents.
+- [PyRIT](https://github.com/Azure/PyRIT) - 生成式 AI 红队工具。
+- [Garak](https://github.com/NVIDIA/garak) - 基于探针的 LLM 漏洞扫描器。
+- [SafeArena (paper)](https://arxiv.org/abs/2503.04957) - Web Agent 有害性评测基准。
+- [OS-Harm (paper)](https://arxiv.org/abs/2506.14866) - OS 级 Agent 有害与滥用评测。
+- [CUAHarm (paper)](https://arxiv.org/abs/2508.00935) - computer-use agent 有害任务执行基准。
 
-## Continuous Cleanup and Anti-Drift
+## 持续清理与反漂移
 
-- [Renovate](https://github.com/renovatebot/renovate) - Automated dependency updates via PRs.
-- [Ruff](https://github.com/astral-sh/ruff) - Fast lint/format checks for recurring cleanup loops.
-- [Biome](https://github.com/biomejs/biome) - Unified formatter/linter for JS/TS codebases.
-- [SonarQube](https://www.sonarsource.com/products/sonarqube/) - Long-horizon code quality trend tracking.
+- [Renovate](https://github.com/renovatebot/renovate) - 自动 PR 方式的依赖持续维护。
+- [Ruff](https://github.com/astral-sh/ruff) - 高频清理任务适配的快速 lint/format。
+- [Biome](https://github.com/biomejs/biome) - JS/TS 统一格式化与静态检查。
+- [SonarQube](https://www.sonarsource.com/products/sonarqube/) - 长周期代码质量趋势追踪。
 
-## Contributing
+## 贡献指南
 
-Contributions are welcome.
+欢迎贡献。
 
-Format:
+格式：
 
 - `- [Name](link) - short description`
 
-Rules:
+规则：
 
-- Keep entries directly relevant to long-horizon agent harness engineering.
-- Prefer primary sources (official docs, original repos, primary papers).
-- Avoid duplicate or marketing-heavy entries.
-- Keep descriptions concise and factual.
+- 仅收录与长程 Agent Harness Engineering 直接相关的条目。
+- 优先官方文档、原始仓库、论文主来源。
+- 避免重复或营销化条目。
+- 描述保持简洁、客观。

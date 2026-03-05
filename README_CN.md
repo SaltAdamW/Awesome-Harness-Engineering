@@ -1,6 +1,6 @@
 # Awesome Harness Engineering [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
 
-[English](./README.md) | 中文
+[English](./README_EN.md) | 中文
 
 面向 **长程任务执行（long-horizon）Agent Harness** 的精选清单。
 
