@@ -2,16 +2,18 @@
 
 [English](./README.md) | 中文
 
-聚焦 **agent-first harness engineering** 的精选清单：通过环境、约束与反馈闭环设计，让编码 Agent 能稳定地构建、测试、评审与交付。
+面向 **长程任务执行（long-horizon）Agent Harness** 的精选清单。
+
+核心不只是评测，而是构建一套环境，让 LLM/VLM 在长程任务中稳定运行；当出错时，依靠 **环境 + 约束 + 反馈** 的闭环完成恢复与收敛。
 
 > 核心参考： [Harness engineering: leveraging Codex in an agent-first world](https://openai.com/index/harness-engineering/)
 
 ## 目录
 
 - [基础方法](#基础方法)
-- [Agent-First 工作流](#agent-first-工作流)
-- [仓库作为事实系统](#仓库作为事实系统)
-- [架构与不变量约束](#架构与不变量约束)
+- [长程任务执行环境](#长程任务执行环境)
+- [约束与护栏](#约束与护栏)
+- [状态、检查点与恢复](#状态检查点与恢复)
 - [应用可读性与可观测性](#应用可读性与可观测性)
 - [评测与回归闭环](#评测与回归闭环)
 - [安全与滥用测试](#安全与滥用测试)
@@ -20,76 +22,77 @@
 
 ## 基础方法
 
-- [OpenAI - Harness engineering: leveraging Codex in an agent-first world](https://openai.com/index/harness-engineering/) - 核心工作范式：人类负责引导，Agent 负责执行。
-- [openai/evals](https://github.com/openai/evals) - 可复现模型评测的开源框架。
-- [Promptfoo](https://github.com/promptfoo/promptfoo) - 支持断言、红队检查和 CI 集成的评测工作流。
+- [OpenAI - Harness engineering: leveraging Codex in an agent-first world](https://openai.com/index/harness-engineering/) - Agent-first 工程范式与实践经验。
+- [openai/evals](https://github.com/openai/evals) - 可复现模型评测框架。
+- [Promptfoo](https://github.com/promptfoo/promptfoo) - 支持断言、红队和 CI 集成的评测流程。
 
-## Agent-First 工作流
+## 长程任务执行环境
 
-- [GitHub CLI](https://cli.github.com/) - 用脚本化方式驱动 PR 生命周期，适配 Agent 迭代。
-- [GitHub Actions](https://docs.github.com/actions) - 自动化 run-validate-patch 循环的 CI 基础设施。
-- [pre-commit](https://pre-commit.com/) - 在提交前执行基线检查，减少无效 CI 轮次。
-- [Reviewdog](https://github.com/reviewdog/reviewdog) - 将 lint/test 反馈转为评审评论，便于 Agent 修复。
+- [Docker](https://www.docker.com/) - 为 Agent 任务提供可复现运行环境。
+- [Kubernetes](https://kubernetes.io/) - 长任务的隔离、调度与生命周期管理。
+- [Temporal](https://temporal.io/) - 面向长流程和失败场景的持久化编排引擎。
+- [LangGraph](https://github.com/langchain-ai/langgraph) - 支持状态化多步控制流的 Agent 运行时。
+- [GitHub Actions](https://docs.github.com/actions) - 可重复的自动化执行基座。
 
-## 仓库作为事实系统
+## 约束与护栏
 
-- [AGENTS.md](https://agents.md/) - 仓库级 Agent 指令约定。
-- [MkDocs Material](https://github.com/squidfunk/mkdocs-material) - 构建可版本化、可检索的知识库文档。
-- [Docusaurus](https://docusaurus.io/) - 适合长期维护的架构与产品文档系统。
-- [markdownlint](https://github.com/DavidAnson/markdownlint) - 统一 Markdown 文档质量。
-- [lychee](https://github.com/lycheeverse/lychee) - 文档链接检查，降低失效引用风险。
+- [AGENTS.md](https://agents.md/) - 仓库级 Agent 约束与协作约定。
+- [ESLint](https://eslint.org/) - 机械化代码质量与模式约束。
+- [Semgrep](https://semgrep.dev/) - 可定制静态策略（架构/安全）。
+- [dependency-cruiser](https://github.com/sverweij/dependency-cruiser) - 约束依赖方向与分层边界。
+- [Zod](https://github.com/colinhacks/zod) - 数据边界的运行时契约校验。
 
-## 架构与不变量约束
+## 状态、检查点与恢复
 
-- [ESLint](https://eslint.org/) - 约束 JS/TS 代码质量与结构规范。
-- [dependency-cruiser](https://github.com/sverweij/dependency-cruiser) - 强制依赖方向与分层边界规则。
-- [Semgrep](https://semgrep.dev/) - 自定义结构/安全规则并机械化执行。
-- [mypy](https://github.com/python/mypy) - Python 类型边界不变量约束。
-- [Zod](https://github.com/colinhacks/zod) - 在服务/API 边界做运行时 schema 校验。
+- [PostgreSQL](https://www.postgresql.org/) - 任务进度与运行元数据的持久化存储。
+- [Redis](https://redis.io/) - 临时状态、锁与队列原语。
+- [Celery](https://github.com/celery/celery) - 带重试与退避能力的分布式任务队列。
+- [BullMQ](https://github.com/taskforcesh/bullmq) - JS/TS 任务队列与重试机制。
+- [Backoff](https://github.com/litl/backoff) - 外部调用失败时的退避重试策略。
 
 ## 应用可读性与可观测性
 
-- [Chrome DevTools Protocol](https://chromedevtools.github.io/devtools-protocol/) - 程序化浏览器观测，用于 UI 验证闭环。
-- [Playwright](https://playwright.dev/) - 浏览器自动化、截图和 trace 采集。
-- [OpenTelemetry](https://opentelemetry.io/) - 统一 traces/metrics/logs 关联分析。
-- [Prometheus](https://prometheus.io/) - 指标采集与时延/SLO 检查。
-- [Grafana Loki](https://grafana.com/oss/loki/) - 支持 LogQL 的日志查询系统。
-- [Grafana Tempo](https://grafana.com/oss/tempo/) - 面向 TraceQL 场景的链路追踪存储。
+- [Chrome DevTools Protocol](https://chromedevtools.github.io/devtools-protocol/) - 程序化浏览器观测，用于 UI 验证。
+- [Playwright](https://playwright.dev/) - 可重复的浏览器自动化、截图与 trace。
+- [OpenTelemetry](https://opentelemetry.io/) - traces/metrics/logs 统一上下文。
+- [Prometheus](https://prometheus.io/) - 指标采集与 SLO 检查。
+- [Grafana Loki](https://grafana.com/oss/loki/) - 基于 LogQL 的日志诊断。
+- [Grafana Tempo](https://grafana.com/oss/tempo/) - 链路追踪存储与追踪级调试。
 
 ## 评测与回归闭环
 
-- [pytest](https://docs.pytest.org/) - 冒烟/回归套件的执行层。
-- [pytest-benchmark](https://github.com/ionelmc/pytest-benchmark) - 性能回归跟踪。
-- [LangSmith Evaluations](https://docs.smith.langchain.com/evaluation) - 数据集、运行与评估器工作流。
-- [DeepEval](https://github.com/confident-ai/deepeval) - LLM 测试样例抽象与断言体系。
-- [RAGAS](https://github.com/explodinggradients/ragas) - 面向检索增强系统的质量指标。
+- [pytest](https://docs.pytest.org/) - 冒烟与回归套件执行层。
+- [pytest-benchmark](https://github.com/ionelmc/pytest-benchmark) - 性能回归检查。
+- [LangSmith Evaluations](https://docs.smith.langchain.com/evaluation) - 数据集、运行、评估器工作流。
+- [DeepEval](https://github.com/confident-ai/deepeval) - LLM 测试样例抽象与断言。
+- [RAGAS](https://github.com/explodinggradients/ragas) - 检索场景质量指标。
 
 ## 安全与滥用测试
 
-- [PyRIT](https://github.com/Azure/PyRIT) - 生成式 AI 红队测试工具。
-- [Garak](https://github.com/NVIDIA/garak) - 模块化探针驱动的 LLM 漏洞扫描工具。
-- [SafeArena (paper)](https://arxiv.org/abs/2503.04957) - Web Agent 有害性基准。
+- [PyRIT](https://github.com/Azure/PyRIT) - 生成式 AI 红队工具。
+- [Garak](https://github.com/NVIDIA/garak) - 基于探针的 LLM 漏洞扫描器。
+- [SafeArena (paper)](https://arxiv.org/abs/2503.04957) - Web Agent 有害性评测基准。
 - [OS-Harm (paper)](https://arxiv.org/abs/2506.14866) - OS 级 Agent 有害与滥用评测。
 - [CUAHarm (paper)](https://arxiv.org/abs/2508.00935) - computer-use agent 有害任务执行基准。
 
 ## 持续清理与反漂移
 
-- [Renovate](https://github.com/renovatebot/renovate) - 通过自动 PR 持续维护依赖。
-- [Ruff](https://github.com/astral-sh/ruff) - 高性能 Python lint/format，适合周期性清理任务。
-- [Biome](https://github.com/biomejs/biome) - JS/TS 统一格式化与静态检查工具。
-- [SonarQube](https://www.sonarsource.com/products/sonarqube/) - 长周期代码质量趋势与问题监控。
+- [Renovate](https://github.com/renovatebot/renovate) - 自动 PR 方式的依赖持续维护。
+- [Ruff](https://github.com/astral-sh/ruff) - 高频清理任务适配的快速 lint/format。
+- [Biome](https://github.com/biomejs/biome) - JS/TS 统一格式化与静态检查。
+- [SonarQube](https://www.sonarsource.com/products/sonarqube/) - 长周期代码质量趋势追踪。
 
 ## 贡献指南
 
 欢迎贡献。
 
-请使用以下格式：
+格式：
 
 - `- [Name](link) - short description`
 
 规则：
 
-- 仅收录与 agent-first harness engineering 直接相关的条目。
+- 仅收录与长程 Agent Harness Engineering 直接相关的条目。
 - 优先官方文档、原始仓库、论文主来源。
-- 避免重复和营销化描述。
+- 避免重复或营销化条目。
 - 描述保持简洁、客观。
