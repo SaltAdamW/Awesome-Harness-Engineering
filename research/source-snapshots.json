@@ -11,7 +11,7 @@
     "title": "",
     "contentHash": "",
     "reachable": false,
-    "error": "Command failed: curl --location --silent --show-error --retry 2 --retry-all-errors --connect-timeout 15 --max-time 45 --user-agent awesome-harness-engineering-source-sync/1.0 --write-out \n__SYNC_META__%{url_effective}\t%{content_type}\t%{http_code} https://openai.com/index/harness-engineering/\ncurl: (35) Recv failure: Connection reset by peer\ncurl: (35) Recv failure: Connection reset by peer\ncurl: (35) Recv failure: Connection reset by peer\n"
+    "error": "HTTP 403 for https://openai.com/index/harness-engineering/"
   },
   {
     "id": "agents-md",
@@ -23,7 +23,7 @@
     "status": 200,
     "contentType": "text/html; charset=utf-8",
     "title": "AGENTS.md",
-    "contentHash": "9fc901e2e0cc02e842f04934fc2f0ba8bc3dee4f72a0513e6fbb73e62e30df71",
+    "contentHash": "d5b5054f3e23620aaabd7316228204217503a255a349a94089c0d97398b27e21",
     "reachable": true,
     "error": null
   },
@@ -37,7 +37,7 @@
     "status": 200,
     "contentType": "text/html; charset=utf-8",
     "title": "OpenAI Compatible Providers",
-    "contentHash": "c2392109b54a86032abfb3370e6c6f81608c8f0a4646ee07967284440ad8edf1",
+    "contentHash": "07c33c3683eccf19d99b19ca4c632c678fbf151771eb9f1c0a2c279c1cabcac6",
     "reachable": true,
     "error": null
   },
@@ -51,7 +51,7 @@
     "status": 200,
     "contentType": "text/html; charset=utf-8",
     "title": "Events that trigger workflows - GitHub Docs",
-    "contentHash": "6f7c581e7407a48ce0d9c6da5bd4074dd6a1a7f4a173c302b8626a6bb164cdf2",
+    "contentHash": "cedce1a74118751dd1340bcf13545221697dcf0f191c52874ead139d7324d68f",
     "reachable": true,
     "error": null
   },
@@ -65,7 +65,7 @@
     "status": 200,
     "contentType": "text/html; charset=utf-8",
     "title": "GITHUB_TOKEN - GitHub Docs",
-    "contentHash": "13c8fe60f5263c6d514ab9a71e657365c0849cad4261d84041d3e17a6169e234",
+    "contentHash": "8d9a00b3edd3a4e03cd1f302c0b13ac8dc901659988dff491232997c484c1b57",
     "reachable": true,
     "error": null
   },
@@ -79,7 +79,7 @@
     "status": 200,
     "contentType": "text/html; charset=utf-8",
     "title": "npm-ci | npm Docs",
-    "contentHash": "b51610b08e3896ebc0be2547cc27375c34b014ba791c5f180f83c2c0c4ae6717",
+    "contentHash": "0b1d5d0c41c0e6e3c253947a39da3043a3727534d8d11614f63637ce2ac7720e",
     "reachable": true,
     "error": null
   }
