@@ -419,6 +419,77 @@ Anthropic 的 Claude Code 文档则把 memory、hooks、settings 这些能力系
 prompt 很重要，但它不应替代环境设计、反馈设计和验证设计。  
 skill 的价值也不是“额外堆知识”，而是把稳定 workflow 打包复用。
 
+## 可直接参考的项目与文件
+
+如果你想从 0 搭一个简单 harness，最有效的方式通常不是先看大而全框架，而是先看“最小闭环”长什么样。下面这些项目和文档更适合直接照着拆结构。
+
+### 1. 最小开源实现
+
+- [iannuttall/ralph](https://github.com/iannuttall/ralph) - 一个很贴近“最小 harness”概念的开源项目。价值：把 agent loop、状态文件、guardrails 和 activity log 都落在文件系统里。
+- Ralph 里特别值得看的文件：
+  - `README.md`
+  - `.ralph/progress.md`
+  - `.ralph/guardrails.md`
+  - `.ralph/activity.log`
+  - `.ralph/errors.log`
+  - `.agents/ralph/config.sh`
+  - `.agents/tasks/*.json`
+- 这个仓库自己的最小 runtime 也适合作为参考：
+  - [runtime/README.md](/Users/weihan.16/code/Awesome-Harness-Engineering/runtime/README.md)
+  - [runtime/src/main.ts](/Users/weihan.16/code/Awesome-Harness-Engineering/runtime/src/main.ts)
+  - [runtime/src/pi-agent.ts](/Users/weihan.16/code/Awesome-Harness-Engineering/runtime/src/pi-agent.ts)
+  - [runtime/src/tools.ts](/Users/weihan.16/code/Awesome-Harness-Engineering/runtime/src/tools.ts)
+  - [runtime/src/store.ts](/Users/weihan.16/code/Awesome-Harness-Engineering/runtime/src/store.ts)
+  - [runtime/src/replay.ts](/Users/weihan.16/code/Awesome-Harness-Engineering/runtime/src/replay.ts)
+
+### 2. PC-based Harness 参考
+
+- [OpenClaw Docs - Agent Workspace](https://docs.openclaw.ai/concepts/agent-workspace) - 重点看 agent workspace 如何承载长期状态与本地文件。
+- [OpenClaw Docs - Memory](https://docs.openclaw.ai/concepts/memory) - 重点看 memory 如何落在文件，而不是只依赖上下文窗口。
+- [OpenClaw Docs - Sandboxing](https://docs.openclaw.ai/gateway/sandboxing) - 重点看 workspace access、bind mounts 和 sandbox scope。
+- [OpenClaw Docs - Browser](https://docs.openclaw.ai/tools/browser) - 重点看 snapshot / screenshot / act 这种浏览器工具设计。
+- [OpenClaw Docs - Security](https://docs.openclaw.ai/security) - 重点看 browser、host control 和权限边界。
+- 如果你要抄文件结构，可以重点理解这些名字在 OpenClaw 里的角色：
+  - `AGENTS.md`
+  - `SOUL.md`
+  - `USER.md`
+  - `IDENTITY.md`
+  - `TOOLS.md`
+
+### 3. Code-based Harness 参考
+
+- [Anthropic Docs - Hooks reference](https://docs.anthropic.com/en/docs/claude-code/hooks) - 重点看如何把外部脚本接到 tool use 前后。
+- [Anthropic Docs - Manage Claude's memory](https://docs.anthropic.com/en/docs/claude-code/memory) - 重点看持久记忆文件如何分层。
+- [Anthropic Docs - Claude Code settings](https://docs.anthropic.com/en/docs/claude-code/settings) - 重点看工具权限、目录访问和 hook 配置。
+- 如果你要抄一个最小 code-based harness，最值得看的文件形态通常是：
+  - `.claude/settings.json`
+  - `.claude/settings.local.json`
+  - `AGENTS.md`
+  - `CLAUDE.md`
+  - `progress.md`
+  - `scripts/validate-*.sh`
+  - `scripts/guardrail-*.py`
+
+### 4. Sandbox-based Harness 参考
+
+- [Manus Docs - Welcome](https://manus.im/docs/en/introduction/welcome) - 重点看“虚拟电脑 + 持久文件系统 + 网络 + 软件安装”的环境设定。
+- [Manus - Agent Skills](https://manus.im/features/agent-skills) - 重点看如何把 workflow 打包成 skill。
+- 如果你要借 Manus 的思路，最值得抄的是这种 skill 结构：
+  - `SKILL.md`
+  - `scripts/*.py`
+  - `scripts/*.sh`
+  - `resources/*`
+- Manus 值得借鉴的不是某个 prompt，而是把 instructions、scripts、resources 和 sandbox 放到同一个执行包里。
+
+### 5. 一个实用起点
+
+如果你今天就想动手，我建议顺序是：
+
+1. 先看 `Ralph`，理解最小文件式 harness。
+2. 再看这个仓库的 `runtime/`，理解最小工具闭环。
+3. 再按场景选一个方向：
+   `OpenClaw` 对应 PC-based，`Claude Code / Codex` 对应 Code-based，`Manus` 对应 Sandbox-based。
+
 ## 本仓库包含什么
 
 这个仓库目前有两部分内容：

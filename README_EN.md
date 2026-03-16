@@ -419,6 +419,77 @@ At minimum, add:
 Prompts matter, but they should not replace environment design, feedback design, or verification design.  
 Skills matter because they package stable workflows, not because they magically add capability by themselves.
 
+## Projects and Files Worth Studying
+
+If you want to build a simple harness from scratch, it is usually more effective to study small closed loops than large all-in-one frameworks. These projects and docs are good places to copy structure from.
+
+### 1. Minimal open-source implementations
+
+- [iannuttall/ralph](https://github.com/iannuttall/ralph) - A strong example of a minimal harness. Why: it pushes the agent loop, state files, guardrails, and activity logs into the filesystem.
+- Files in Ralph that are especially worth reading:
+  - `README.md`
+  - `.ralph/progress.md`
+  - `.ralph/guardrails.md`
+  - `.ralph/activity.log`
+  - `.ralph/errors.log`
+  - `.agents/ralph/config.sh`
+  - `.agents/tasks/*.json`
+- This repo’s own minimal runtime is also a useful reference:
+  - [runtime/README.md](/Users/weihan.16/code/Awesome-Harness-Engineering/runtime/README.md)
+  - [runtime/src/main.ts](/Users/weihan.16/code/Awesome-Harness-Engineering/runtime/src/main.ts)
+  - [runtime/src/pi-agent.ts](/Users/weihan.16/code/Awesome-Harness-Engineering/runtime/src/pi-agent.ts)
+  - [runtime/src/tools.ts](/Users/weihan.16/code/Awesome-Harness-Engineering/runtime/src/tools.ts)
+  - [runtime/src/store.ts](/Users/weihan.16/code/Awesome-Harness-Engineering/runtime/src/store.ts)
+  - [runtime/src/replay.ts](/Users/weihan.16/code/Awesome-Harness-Engineering/runtime/src/replay.ts)
+
+### 2. PC-based harness references
+
+- [OpenClaw Docs - Agent Workspace](https://docs.openclaw.ai/concepts/agent-workspace) - Focus on how the workspace carries durable state and local files.
+- [OpenClaw Docs - Memory](https://docs.openclaw.ai/concepts/memory) - Focus on how memory is stored in files instead of relying only on context windows.
+- [OpenClaw Docs - Sandboxing](https://docs.openclaw.ai/gateway/sandboxing) - Focus on workspace access, bind mounts, and sandbox scope.
+- [OpenClaw Docs - Browser](https://docs.openclaw.ai/tools/browser) - Focus on browser-tool design such as snapshot / screenshot / act.
+- [OpenClaw Docs - Security](https://docs.openclaw.ai/security) - Focus on browser access, host control, and permission boundaries.
+- If you want file-level structure ideas, these names are especially useful in the OpenClaw model:
+  - `AGENTS.md`
+  - `SOUL.md`
+  - `USER.md`
+  - `IDENTITY.md`
+  - `TOOLS.md`
+
+### 3. Code-based harness references
+
+- [Anthropic Docs - Hooks reference](https://docs.anthropic.com/en/docs/claude-code/hooks) - Focus on how external scripts are attached before and after tool use.
+- [Anthropic Docs - Manage Claude's memory](https://docs.anthropic.com/en/docs/claude-code/memory) - Focus on how durable memory files are layered.
+- [Anthropic Docs - Claude Code settings](https://docs.anthropic.com/en/docs/claude-code/settings) - Focus on tool permissions, directory access, and hook configuration.
+- If you want to copy a minimal code-based harness shape, these file patterns are the most useful:
+  - `.claude/settings.json`
+  - `.claude/settings.local.json`
+  - `AGENTS.md`
+  - `CLAUDE.md`
+  - `progress.md`
+  - `scripts/validate-*.sh`
+  - `scripts/guardrail-*.py`
+
+### 4. Sandbox-based harness references
+
+- [Manus Docs - Welcome](https://manus.im/docs/en/introduction/welcome) - Focus on the “virtual computer + persistent filesystem + network + software install” environment model.
+- [Manus - Agent Skills](https://manus.im/features/agent-skills) - Focus on how workflows are packaged into reusable skills.
+- If you want to borrow the Manus approach, this skill layout is especially useful:
+  - `SKILL.md`
+  - `scripts/*.py`
+  - `scripts/*.sh`
+  - `resources/*`
+- The most useful idea to borrow from Manus is not a particular prompt, but the packaging of instructions, scripts, resources, and sandbox execution into one unit.
+
+### 5. A practical starting point
+
+If you want to begin immediately, this order is pragmatic:
+
+1. Start with `Ralph` to understand a minimal file-based harness.
+2. Then inspect this repo’s `runtime/` to understand a minimal tool loop.
+3. Then choose one direction based on your environment:
+   `OpenClaw` for PC-based, `Claude Code / Codex` for code-based, and `Manus` for sandbox-based.
+
 ## What This Repository Includes
 
 This repository currently has two parts:
