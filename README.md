@@ -12,7 +12,7 @@
 
 如果你认同下面这个判断，这个仓库就适合你：
 
-> Agent 在真实环境里失败，通常不是因为“模型不够聪明”，而是因为缺少一个足够好的 harness。
+> Agent 在真实环境里失败，通常不是因为“模型不够聪明”，而是因为缺少足够好的 harness engineering。
 
 ![Harness loop and three harness families](./assets/harness-taxonomy.svg)
 
@@ -31,6 +31,8 @@
 - `verifier`：外部验收与完成判断
 - `memory`：进度、日志、检查点、长期记忆
 - `guardrails`：权限边界、审批、风险控制
+
+![Harness components](./assets/harness-components.svg)
 
 ## 什么是 Harness
 
@@ -82,6 +84,8 @@ Harness 的核心是一个可重复执行的闭环：
 
 `Task -> Context -> Action -> Feedback -> Verify -> Retry/Stop -> Persist`
 
+![Minimal harness loop](./assets/harness-minimal-loop.svg)
+
 每一环的含义如下：
 
 1. `Task`
@@ -113,6 +117,8 @@ Harness 的核心是一个可重复执行的闭环：
 
 这部分是最值得落地的 checklist。很多 agent 体验差，不是模型差，而是下面这些点没设计好。
 
+![Common harness design techniques](./assets/harness-techniques.svg)
+
 - **缩小动作空间**
   只暴露少量高价值动作。动作空间越小，行为越稳定。coding 场景里，`read / bash / edit / write` 往往已经够用。
 - **把成功条件外部化**
@@ -139,6 +145,8 @@ Harness 的核心是一个可重复执行的闭环：
 3. `Sandbox-based harness`
 
 这三类并不是严格互斥的产品分类，更像三种不同的环境中心。很多系统会混合使用，但它们各自的主导约束不同。
+
+![Harness family comparison](./assets/harness-families-comparison.svg)
 
 ### 1. OpenClaw 一类：PC-based Harness
 
@@ -348,6 +356,8 @@ Anthropic 的 Claude Code 文档则把 memory、hooks、settings 这些能力系
 
 如果你今天就要开始做一个最小 harness，建议按下面这个顺序来：
 
+![Build a harness from scratch](./assets/harness-build-steps.svg)
+
 ### 1. 先定义成功条件
 
 先回答“怎么知道任务完成了”，不要先写 prompt。
@@ -477,6 +487,8 @@ skill 的价值也不是“额外堆知识”，而是把稳定 workflow 打包�
 ## 最小 Runtime 说明
 
 `runtime/` 目前提供的是一个 **本地、可回放、最小化工具集** 的 runtime，适合做概念验证和教学拆解。
+
+![Minimal runtime map](./assets/runtime-map.svg)
 
 ### 已实现能力
 

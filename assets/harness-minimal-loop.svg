@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="640" viewBox="0 0 1200 640" role="img" aria-labelledby="title desc">
+  <title id="title">Minimal harness loop</title>
+  <desc id="desc">A seven-stage flowchart showing a minimal harness loop from task to persistence.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc" />
+      <stop offset="100%" stop-color="#ecfeff" />
+    </linearGradient>
+    <style>
+      .title { font: 700 34px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #0f172a; }
+      .subtitle { font: 500 17px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #475569; }
+      .step { font: 700 18px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #ffffff; }
+      .body { font: 500 14px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #334155; }
+    </style>
+  </defs>
+  <rect width="1200" height="640" fill="url(#bg)" />
+  <text x="70" y="76" class="title">Minimal Harness Loop</text>
+  <text x="70" y="106" class="subtitle">A simple agent becomes a harness when each stage has a clear input, output, and decision rule.</text>
+
+  <g transform="translate(70 175)">
+    <rect x="0" y="0" width="130" height="82" rx="20" fill="#1d4ed8" />
+    <text x="65" y="48" text-anchor="middle" class="step">Task</text>
+    <text x="0" y="114" class="body">goal definition</text>
+
+    <rect x="160" y="0" width="130" height="82" rx="20" fill="#2563eb" />
+    <text x="225" y="48" text-anchor="middle" class="step">Context</text>
+    <text x="160" y="114" class="body">tools, limits, state</text>
+
+    <rect x="320" y="0" width="130" height="82" rx="20" fill="#0284c7" />
+    <text x="385" y="48" text-anchor="middle" class="step">Action</text>
+    <text x="320" y="114" class="body">command or tool call</text>
+
+    <rect x="480" y="0" width="130" height="82" rx="20" fill="#0f766e" />
+    <text x="545" y="48" text-anchor="middle" class="step">Feedback</text>
+    <text x="480" y="114" class="body">real environment output</text>
+
+    <rect x="640" y="0" width="130" height="82" rx="20" fill="#059669" />
+    <text x="705" y="48" text-anchor="middle" class="step">Verify</text>
+    <text x="640" y="114" class="body">done or not done</text>
+
+    <rect x="800" y="0" width="130" height="82" rx="20" fill="#ca8a04" />
+    <text x="865" y="48" text-anchor="middle" class="step">Retry / Stop</text>
+    <text x="800" y="114" class="body">policy decision</text>
+
+    <rect x="960" y="0" width="130" height="82" rx="20" fill="#9333ea" />
+    <text x="1025" y="48" text-anchor="middle" class="step">Persist</text>
+    <text x="960" y="114" class="body">logs and checkpoints</text>
+
+    <path d="M130 41 H160" stroke="#0f172a" stroke-width="4" />
+    <path d="M290 41 H320" stroke="#0f172a" stroke-width="4" />
+    <path d="M450 41 H480" stroke="#0f172a" stroke-width="4" />
+    <path d="M610 41 H640" stroke="#0f172a" stroke-width="4" />
+    <path d="M770 41 H800" stroke="#0f172a" stroke-width="4" />
+    <path d="M930 41 H960" stroke="#0f172a" stroke-width="4" />
+  </g>
+
+  <g transform="translate(125 390)">
+    <rect x="0" y="0" width="950" height="150" rx="28" fill="#ffffff" stroke="#cbd5e1" stroke-width="2" />
+    <text x="40" y="42" style="font:700 20px -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; fill:#0f172a;">What makes this a harness instead of just prompting?</text>
+    <text x="40" y="77" class="body">1. The environment is real and can answer back with observable state.</text>
+    <text x="40" y="104" class="body">2. Success is checked by an external verifier, not by model self-declaration.</text>
+    <text x="40" y="131" class="body">3. State is persisted so the system can resume, replay, and improve over time.</text>
+  </g>
+</svg>

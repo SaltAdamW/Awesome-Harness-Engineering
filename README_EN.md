@@ -12,7 +12,7 @@ This project is not mainly about “yet another agent framework.” It focuses o
 
 If you agree with the statement below, this repo is probably for you:
 
-> When agents fail in real environments, the bottleneck is often not model intelligence, but harness quality.
+> When agents fail in real environments, the bottleneck is often not model intelligence, but weak harness engineering.
 
 ![Harness loop and three harness families](./assets/harness-taxonomy.svg)
 
@@ -31,6 +31,8 @@ More concretely, a harness is the system that connects these pieces into a loop:
 - `verifier`: external checks for completion and correctness
 - `memory`: progress, logs, checkpoints, and durable notes
 - `guardrails`: permissions, approvals, and risk controls
+
+![Harness components](./assets/harness-components.svg)
 
 ## What Harness Means
 
@@ -82,6 +84,8 @@ If you want one compact way to explain harnesses, this is the clearest minimal c
 
 `Task -> Context -> Action -> Feedback -> Verify -> Retry/Stop -> Persist`
 
+![Minimal harness loop](./assets/harness-minimal-loop.svg)
+
 Each stage means:
 
 1. `Task`
@@ -113,6 +117,8 @@ Once that chain exists, even with very few tools, you already have a minimal har
 
 This is the most practical checklist in the repo. Many poor agent experiences are not model problems. They are harness problems.
 
+![Common harness design techniques](./assets/harness-techniques.svg)
+
 - **Keep the action space small**
   Expose only a few high-value actions. Smaller action spaces are easier to stabilize. In coding, `read / bash / edit / write` is often enough.
 - **Externalize success criteria**
@@ -139,6 +145,8 @@ From an engineering perspective, most practical harnesses can be grouped into th
 3. `Sandbox-based harness`
 
 These are not strict product categories. They are better understood as three different environment centers. Real systems often mix them.
+
+![Harness family comparison](./assets/harness-families-comparison.svg)
 
 ### 1. OpenClaw-style: PC-based Harness
 
@@ -348,6 +356,8 @@ A practical rule of thumb:
 
 If you want to start building today, use this order:
 
+![Build a harness from scratch](./assets/harness-build-steps.svg)
+
 ### 1. Define success first
 
 Answer “how will we know the task is done?” before you write prompts.
@@ -477,6 +487,8 @@ If you are building your own agent runtime, this is meant to be a small but comp
 ## Minimal Runtime
 
 `runtime/` currently provides a **local, replayable, minimal-tool runtime** suitable for concept demos and teaching.
+
+![Minimal runtime map](./assets/runtime-map.svg)
 
 ### Implemented capabilities
 
