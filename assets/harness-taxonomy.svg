@@ -18,7 +18,7 @@
       .title { font: 700 46px Georgia, "Times New Roman", serif; fill: #172033; }
       .subtitle { font: 500 19px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #445066; }
       .hero-title { font: 700 32px Georgia, "Times New Roman", serif; fill: #f8fafc; }
-      .hero-text { font: 500 18px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #d9e7f2; }
+      .hero-text { font: 500 16px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #d9e7f2; }
       .badge { font: 700 12px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; letter-spacing: 0.16em; }
       .card-title { font: 700 30px Georgia, "Times New Roman", serif; fill: #172033; }
       .card-text { font: 500 16px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #4b5563; }
@@ -33,8 +33,7 @@
   <rect x="86" y="168" width="1028" height="178" rx="34" fill="url(#hero)" filter="url(#shadow)" />
   <text x="600" y="234" text-anchor="middle" class="hero-title">Harness Engineering is about the loop,</text>
   <text x="600" y="272" text-anchor="middle" class="hero-title">not just the model.</text>
-  <text x="600" y="316" text-anchor="middle" class="hero-text">A good harness defines where the agent acts, what it can do,</text>
-  <text x="600" y="345" text-anchor="middle" class="hero-text">how the environment answers back, and how success gets verified.</text>
+  <text x="600" y="324" text-anchor="middle" class="hero-text">A good harness defines where the agent acts, what it can do, how the environment answers back, and how success gets verified.</text>
 
   <rect x="86" y="406" width="314" height="224" rx="30" fill="#fffdf8" stroke="#d8dee8" stroke-width="2" filter="url(#shadow)" />
   <rect x="110" y="432" width="102" height="28" rx="14" fill="#e0ecff" />
