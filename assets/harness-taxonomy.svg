@@ -31,10 +31,10 @@
   <text x="86" y="127" class="subtitle">Three useful reference shapes for thinking about environments, feedback, and verifiers.</text>
 
   <rect x="86" y="168" width="1028" height="178" rx="34" fill="url(#hero)" filter="url(#shadow)" />
-  <text x="130" y="234" class="hero-title">Harness Engineering is about the loop,</text>
-  <text x="130" y="272" class="hero-title">not just the model.</text>
-  <text x="130" y="316" class="hero-text">A good harness defines where the agent acts, what it can do,</text>
-  <text x="130" y="345" class="hero-text">how the environment answers back, and how success gets verified.</text>
+  <text x="600" y="234" text-anchor="middle" class="hero-title">Harness Engineering is about the loop,</text>
+  <text x="600" y="272" text-anchor="middle" class="hero-title">not just the model.</text>
+  <text x="600" y="316" text-anchor="middle" class="hero-text">A good harness defines where the agent acts, what it can do,</text>
+  <text x="600" y="345" text-anchor="middle" class="hero-text">how the environment answers back, and how success gets verified.</text>
 
   <rect x="86" y="406" width="314" height="224" rx="30" fill="#fffdf8" stroke="#d8dee8" stroke-width="2" filter="url(#shadow)" />
   <rect x="110" y="432" width="102" height="28" rx="14" fill="#e0ecff" />
