@@ -1,81 +1,55 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
-  <title id="title">Harness loop and three harness families</title>
-  <desc id="desc">A simple diagram showing the agent harness loop and three common harness families: PC-based, Code-based, and Sandbox-based.</desc>
+  <title id="title">Harness engineering overview</title>
+  <desc id="desc">A simplified overview graphic highlighting three harness examples: OpenClaw, Codex, and Manus.</desc>
   <defs>
     <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#f8fafc" />
+      <stop offset="0%" stop-color="#fffaf0" />
+      <stop offset="55%" stop-color="#f8fafc" />
       <stop offset="100%" stop-color="#eef2ff" />
     </linearGradient>
-    <linearGradient id="loop" x1="0%" y1="0%" x2="100%" y2="0%">
+    <linearGradient id="center" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#0f766e" />
       <stop offset="100%" stop-color="#2563eb" />
     </linearGradient>
     <style>
-      .title { font: 700 32px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #0f172a; }
-      .subtitle { font: 500 16px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #334155; }
-      .card-title { font: 700 20px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #0f172a; }
-      .card-text { font: 500 15px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #334155; }
-      .loop-text { font: 700 18px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #ffffff; }
-      .label { font: 700 14px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #0f172a; letter-spacing: 0.08em; }
+      .title { font: 700 36px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #0f172a; }
+      .subtitle { font: 500 18px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #475569; }
+      .center-title { font: 700 34px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #ffffff; }
+      .center-text { font: 500 17px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #dbeafe; }
+      .card-title { font: 700 28px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #0f172a; }
+      .card-type { font: 700 14px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #2563eb; letter-spacing: 0.12em; }
+      .card-text { font: 500 16px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #334155; }
     </style>
   </defs>
 
   <rect x="0" y="0" width="1200" height="720" fill="url(#bg)" />
 
-  <text x="80" y="78" class="title">Harness = A closed loop for agent execution</text>
-  <text x="80" y="108" class="subtitle">Task, environment, tools, feedback, verifier, memory, and guardrails work together.</text>
+  <text x="80" y="88" class="title">Harness Engineering</text>
+  <text x="80" y="120" class="subtitle">The core question is not just model capability. It is what environment, feedback, and verifier the agent runs inside.</text>
 
-  <rect x="80" y="150" width="1040" height="170" rx="28" fill="#ffffff" stroke="#cbd5e1" stroke-width="2" />
-  <text x="102" y="182" class="label">MINIMUM LOOP</text>
+  <rect x="380" y="200" width="440" height="170" rx="32" fill="url(#center)" />
+  <text x="600" y="270" text-anchor="middle" class="center-title">Harness = execution loop</text>
+  <text x="600" y="308" text-anchor="middle" class="center-text">environment • tools • feedback • verifier • memory</text>
 
-  <rect x="110" y="212" width="140" height="68" rx="16" fill="url(#loop)" />
-  <text x="180" y="253" text-anchor="middle" class="loop-text">Task</text>
+  <path d="M380 285 C315 285 275 285 240 285" fill="none" stroke="#94a3b8" stroke-width="4" stroke-linecap="round" />
+  <path d="M820 285 C885 285 925 285 960 285" fill="none" stroke="#94a3b8" stroke-width="4" stroke-linecap="round" />
+  <path d="M600 370 C600 420 600 450 600 485" fill="none" stroke="#94a3b8" stroke-width="4" stroke-linecap="round" />
 
-  <rect x="275" y="212" width="140" height="68" rx="16" fill="url(#loop)" />
-  <text x="345" y="253" text-anchor="middle" class="loop-text">Observe</text>
+  <rect x="70" y="210" width="260" height="150" rx="26" fill="#ffffff" stroke="#cbd5e1" stroke-width="2" />
+  <text x="100" y="252" class="card-type">PC-BASED</text>
+  <text x="100" y="294" class="card-title">OpenClaw</text>
+  <text x="100" y="327" class="card-text">A computer-use harness centered on</text>
+  <text x="100" y="352" class="card-text">browser, desktop, and real GUI actions.</text>
 
-  <rect x="440" y="212" width="140" height="68" rx="16" fill="url(#loop)" />
-  <text x="510" y="253" text-anchor="middle" class="loop-text">Act</text>
+  <rect x="870" y="210" width="260" height="150" rx="26" fill="#ffffff" stroke="#cbd5e1" stroke-width="2" />
+  <text x="900" y="252" class="card-type">CODE-BASED</text>
+  <text x="900" y="294" class="card-title">Codex</text>
+  <text x="900" y="327" class="card-text">A coding harness centered on repo,</text>
+  <text x="900" y="352" class="card-text">shell, tests, diffs, and CI feedback.</text>
 
-  <rect x="605" y="212" width="140" height="68" rx="16" fill="url(#loop)" />
-  <text x="675" y="253" text-anchor="middle" class="loop-text">Feedback</text>
-
-  <rect x="770" y="212" width="140" height="68" rx="16" fill="url(#loop)" />
-  <text x="840" y="253" text-anchor="middle" class="loop-text">Verify</text>
-
-  <rect x="935" y="212" width="140" height="68" rx="16" fill="url(#loop)" />
-  <text x="1005" y="253" text-anchor="middle" class="loop-text">Persist</text>
-
-  <path d="M250 246 H275" stroke="#1d4ed8" stroke-width="5" stroke-linecap="round" />
-  <path d="M415 246 H440" stroke="#1d4ed8" stroke-width="5" stroke-linecap="round" />
-  <path d="M580 246 H605" stroke="#1d4ed8" stroke-width="5" stroke-linecap="round" />
-  <path d="M745 246 H770" stroke="#1d4ed8" stroke-width="5" stroke-linecap="round" />
-  <path d="M910 246 H935" stroke="#1d4ed8" stroke-width="5" stroke-linecap="round" />
-
-  <path d="M1005 298 C1005 350 195 350 195 298" fill="none" stroke="#0f766e" stroke-width="5" stroke-linecap="round" />
-  <polygon points="183,298 197,289 197,307" fill="#0f766e" />
-  <text x="600" y="384" text-anchor="middle" class="subtitle">The harness decides whether to retry, stop, recover, or escalate.</text>
-
-  <text x="80" y="456" class="label">COMMON FAMILIES</text>
-
-  <rect x="80" y="486" width="320" height="170" rx="24" fill="#ffffff" stroke="#cbd5e1" stroke-width="2" />
-  <text x="110" y="526" class="card-title">PC-based Harness</text>
-  <text x="110" y="558" class="card-text">Environment: browser, desktop, OS</text>
-  <text x="110" y="586" class="card-text">Actions: click, type, scroll, snapshot</text>
-  <text x="110" y="614" class="card-text">Verifier: UI state, screenshot, task result</text>
-  <text x="110" y="642" class="card-text">Main challenge: noisy observations and risk</text>
-
-  <rect x="440" y="486" width="320" height="170" rx="24" fill="#ffffff" stroke="#cbd5e1" stroke-width="2" />
-  <text x="470" y="526" class="card-title">Code-based Harness</text>
-  <text x="470" y="558" class="card-text">Environment: repo, shell, CI, git</text>
-  <text x="470" y="586" class="card-text">Actions: read, edit, write, bash, test</text>
-  <text x="470" y="614" class="card-text">Verifier: tests, lint, build, diff, CI</text>
-  <text x="470" y="642" class="card-text">Main challenge: long-horizon drift</text>
-
-  <rect x="800" y="486" width="320" height="170" rx="24" fill="#ffffff" stroke="#cbd5e1" stroke-width="2" />
-  <text x="830" y="526" class="card-title">Sandbox-based Harness</text>
-  <text x="830" y="558" class="card-text">Environment: VM, container, workspace</text>
-  <text x="830" y="586" class="card-text">Actions: run, browse, write, install, export</text>
-  <text x="830" y="614" class="card-text">Verifier: artifacts, services, staged checks</text>
-  <text x="830" y="642" class="card-text">Main challenge: safety and orchestration</text>
+  <rect x="380" y="500" width="440" height="150" rx="26" fill="#ffffff" stroke="#cbd5e1" stroke-width="2" />
+  <text x="410" y="542" class="card-type">SANDBOX-BASED</text>
+  <text x="410" y="584" class="card-title">Manus</text>
+  <text x="410" y="617" class="card-text">A sandbox harness centered on isolated workspaces, tools,</text>
+  <text x="410" y="642" class="card-text">persistent filesystems, and multi-step task execution.</text>
 </svg>
