@@ -51,7 +51,7 @@
     "status": 200,
     "contentType": "text/html; charset=utf-8",
     "title": "Events that trigger workflows - GitHub Docs",
-    "contentHash": "fd5363a374bfd5c616497e55d495a8203d8eb5894b14dfe7e8b09d5814fe6f4a",
+    "contentHash": "99570ee4dbc2b9968ec157478b94cbd22688f1cdbfae4cdde596eaaf15a7e8f7",
     "reachable": true,
     "error": null
   },
@@ -65,7 +65,7 @@
     "status": 200,
     "contentType": "text/html; charset=utf-8",
     "title": "GITHUB_TOKEN - GitHub Docs",
-    "contentHash": "8c90d70a42b0814584ef220c4b3439781d1634dd86b1d881aa700714e80001da",
+    "contentHash": "fadb25e663ba702c3c5f99ad0d1947b9056e0e821678f53f6169b8306c5d60ea",
     "reachable": true,
     "error": null
   },
