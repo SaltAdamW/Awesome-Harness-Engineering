@@ -4,8 +4,52 @@ English | [中文](./README_ZH.md)
 
 A curated list of reports, blog posts, and research papers about **harness engineering** for AI agents.
 
+## What Is Harness Engineering?
+
+Harness engineering is the practice of improving an AI agent by engineering everything around the model: its runtime, tools, context, memory, verification, and control flow.
+
+The shortest way to say it is: `an agent is not just a model, it is a model plus a harness.`
+
+The harness is the layer that determines how the model actually works in the world. It decides what the agent can see, what tools it can call, what instructions stay durable, how results are checked, how failures are surfaced, and how context is kept clean enough for the model to keep thinking clearly.
+
+This matters because many real agent failures are not caused by the model being "too dumb." They happen because the surrounding system is weak: the wrong tools are exposed, too much irrelevant context is loaded, verification is missing, outputs are not replayable, or the agent is allowed to loop without meaningful feedback. In practice, better models help, but better harnesses change the failure rate much more directly.
+
+For agents in general, harness engineering usually answers questions like:
+
+- What can the agent see, remember, and act on?
+- How does it gain new capabilities without becoming noisy or unstable?
+- How is success checked by the environment instead of guessed by the model?
+- How are long-running tasks kept coherent over time?
+- How do repeated failures become one-time system fixes?
+
+For coding agents specifically, that often becomes:
+
+- How does the agent learn repo-specific rules that are not in training data?
+- How do we give it new capabilities without polluting the context window?
+- How do we verify work mechanically instead of trusting the model to declare success?
+- How do we keep long tasks coherent instead of letting context rot set in?
+- How do we turn a repeated failure into a one-time engineering fix?
+
+Typical harness components include prompts and agent files, tools and MCP servers, skills, sub-agents, hooks, memory files, verifiers, and back-pressure mechanisms such as tests, typechecks, approval gates, or workflow checks.
+
+So when an agent keeps making the same mistake, harness engineering means changing the system around the model so that mistake becomes harder to make next time, easier to detect, or impossible to ship.
+
+## Existing Harnesses
+
+- [Codex](https://openai.com/codex/) - A coding-agent harness centered on repositories, tools, verification, and agentic software workflows.
+- [Claude Code](https://docs.anthropic.com/en/docs/claude-code/overview) - A coding-agent harness built around repo access, memory, hooks, settings, and tool use.
+- [OpenHands](https://docs.openhands.dev/) - An open coding-agent harness with sandboxed execution and repository-centered task loops.
+- [Aider](https://aider.chat/docs/) - A terminal-first coding-agent harness focused on code editing, Git workflows, and pair-programming-style iteration.
+- [Cline](https://docs.cline.bot/) - A coding-agent harness for editor-driven coding workflows with tool use and file operations.
+- [Goose](https://block.github.io/goose/) - An open agent harness for developer workflows with tools, extensions, and local execution.
+- [Gemini CLI](https://docs.cloud.google.com/gemini/docs/codeassist/gemini-cli) - A coding-agent harness delivered through a terminal interface for code and developer tasks.
+- [OpenClaw](https://docs.openclaw.ai/index) - A computer-use harness centered on browser control, workspaces, snapshots, and sandbox boundaries.
+- [Responses API + computer environment](https://openai.com/index/equip-responses-api-computer-environment) - A computer-use harness pattern that pairs the model with a real computer environment and tool-driven interaction.
+- [Manus](https://manus.im/docs) - A general-purpose sandbox harness combining a virtual computer, persistent filesystem, network access, and long-running execution.
+
 ## Contents
 
+- [Existing Harnesses](#existing-harnesses)
 - [Report](#report)
 - [Blog](#blog)
 - [Research](#research)
