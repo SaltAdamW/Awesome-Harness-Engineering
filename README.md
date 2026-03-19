@@ -4,35 +4,81 @@ English | [中文](./README_ZH.md)
 
 A curated list of reports, blog posts, and research papers about **harness engineering** for AI agents.
 
+## Contents
+
+- [What Is Harness Engineering?](#what-is-harness-engineering)
+- [Core Principles](#core-principles)
+- [Harness Components](#harness-components)
+- [Harness Layers](#harness-layers)
+- [Harness vs Framework](#harness-vs-framework)
+- [Existing Harnesses](#existing-harnesses)
+- [Report](#report)
+- [Blog](#blog)
+- [Research](#research)
+
 ## What Is Harness Engineering?
 
-Harness engineering is the practice of improving an AI agent by engineering everything around the model: its runtime, tools, context, memory, verification, and control flow.
+Harness engineering is the discipline of designing the system around an AI agent so it can do reliable work in the real world.
 
-The shortest way to say it is: `an agent is not just a model, it is a model plus a harness.`
+The short version is: `an agent is not just a model; it is a model plus a harness.`
 
-The harness is the layer that determines how the model actually works in the world. It decides what the agent can see, what tools it can call, what instructions stay durable, how results are checked, how failures are surfaced, and how context is kept clean enough for the model to keep thinking clearly.
+An `agent harness` is everything around the model itself: session management, context delivery, tool design, memory, architectural constraints, verification, failure recovery, and human oversight. It is the layer that decides what the agent can see, what it can do, how it gets feedback, and how its work is checked before anyone trusts it.
 
-This matters because many real agent failures are not caused by the model being "too dumb." They happen because the surrounding system is weak: the wrong tools are exposed, too much irrelevant context is loaded, verification is missing, outputs are not replayable, or the agent is allowed to loop without meaningful feedback. In practice, better models help, but better harnesses change the failure rate much more directly.
+This matters because many agent failures are not really model failures. They are harness failures. The model had the wrong tools, too much irrelevant context, no durable memory, no mechanical verifier, or no safe way to recover from mistakes. Better models help, but better harnesses usually improve reliability faster.
 
-For agents in general, harness engineering usually answers questions like:
+In practice, harness engineering is about questions like:
 
-- What can the agent see, remember, and act on?
-- How does it gain new capabilities without becoming noisy or unstable?
-- How is success checked by the environment instead of guessed by the model?
-- How are long-running tasks kept coherent over time?
-- How do repeated failures become one-time system fixes?
+- What should the agent be allowed to see, remember, and act on?
+- How do we give it new capabilities without overwhelming its context window?
+- How do we enforce rules mechanically instead of hoping the model follows them?
+- How do we verify outputs with tests, checks, reviewers, or environment feedback?
+- How do we make repeated failures cheaper by fixing the system instead of repeating the prompt?
 
-For coding agents specifically, that often becomes:
+In other words, an agent harness is the infrastructure that wraps around an agent. When a team stops spending most of its effort on writing code directly and instead spends it on designing environments, specifying intent, and building feedback loops that let agents work reliably, that team is doing harness engineering.
 
-- How does the agent learn repo-specific rules that are not in training data?
-- How do we give it new capabilities without polluting the context window?
-- How do we verify work mechanically instead of trusting the model to declare success?
-- How do we keep long tasks coherent instead of letting context rot set in?
-- How do we turn a repeated failure into a one-time engineering fix?
+## Core Principles
 
-Typical harness components include prompts and agent files, tools and MCP servers, skills, sub-agents, hooks, memory files, verifiers, and back-pressure mechanisms such as tests, typechecks, approval gates, or workflow checks.
+- Humans steer, agents execute.
+- Repository or workspace knowledge should be the system of record.
+- If knowledge is not machine-readable in the working environment, it effectively does not exist to the agent.
+- `AGENTS.md` should be a table of contents, not an encyclopedia.
+- Fewer, more expressive tools usually beat long menus of narrow ones.
+- Progressive disclosure beats loading everything up front.
+- Architecture and quality constraints should be enforced mechanically.
+- Agent legibility matters: the environment, code, logs, and docs should be easy for the agent to inspect and reason about.
+- Corrections are often cheaper than waiting; high-throughput agent systems need fast feedback and fix-forward loops.
+- The goal is not just model intelligence, but agent legibility, control, and recoverability.
 
-So when an agent keeps making the same mistake, harness engineering means changing the system around the model so that mistake becomes harder to make next time, easier to detect, or impossible to ship.
+## Harness Components
+
+Common harness components include:
+
+- Session management: how work is started, resumed, isolated, and stopped.
+- Context delivery: which instructions, docs, specs, and memories enter the context window.
+- Tool design: the commands, APIs, browsers, or files the agent can act through.
+- Memory: durable notes, state, plans, artifacts, and repository knowledge.
+- Constraints: architecture rules, permissions, approvals, and policy boundaries.
+- Verification: tests, typechecks, evals, reviewers, and environment feedback.
+- Failure recovery: retries, checkpoints, rollback paths, and resumable workflows.
+- Human oversight: approval gates, review steps, escalation paths, and intervention points.
+
+## Harness Layers
+
+Harnesses are often easier to understand as a stack of layers around the agent:
+
+- Execution layer: the agent itself and the immediate tools it uses.
+- Runtime layer: memory, session state, sandboxes, workspaces, browser environments, and long-running execution.
+- Orchestration layer: task routing, parallel agents, worktrees, approval flows, and issue-to-PR pipelines.
+- Requirements layer: specs, plans, acceptance criteria, and agent-readable instructions.
+- Standards layer: formats and protocols such as `AGENTS.md`, `agents.md`, MCP, and agent-to-agent communication patterns.
+
+Not every harness includes all of these layers, but most production systems combine several of them.
+
+## Harness vs Framework
+
+A framework gives you building blocks for constructing agent systems. A harness is the actual operating system around an agent: the environment, rules, tools, memory, verification loop, and recovery paths that determine whether the agent is useful in practice.
+
+Frameworks help you build harnesses. Harnesses are what agents actually run inside.
 
 ## Existing Harnesses
 
@@ -46,13 +92,6 @@ So when an agent keeps making the same mistake, harness engineering means changi
 - [OpenClaw](https://docs.openclaw.ai/index) - A computer-use harness centered on browser control, workspaces, snapshots, and sandbox boundaries.
 - [Responses API + computer environment](https://openai.com/index/equip-responses-api-computer-environment) - A computer-use harness pattern that pairs the model with a real computer environment and tool-driven interaction.
 - [Manus](https://manus.im/docs) - A general-purpose sandbox harness combining a virtual computer, persistent filesystem, network access, and long-running execution.
-
-## Contents
-
-- [Existing Harnesses](#existing-harnesses)
-- [Report](#report)
-- [Blog](#blog)
-- [Research](#research)
 
 ## Report
 
