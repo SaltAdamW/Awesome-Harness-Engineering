@@ -92,6 +92,7 @@ Framework 帮你搭 harness。Harness 才是 agent 真正运行在其中的东�
 - [OpenClaw](https://docs.openclaw.ai/index) - 一个以浏览器控制、workspace、snapshots 和 sandbox 边界为核心的 computer-use harness。
 - [Responses API + computer environment](https://openai.com/index/equip-responses-api-computer-environment) - 一个把模型与真实 computer environment 及工具驱动交互结合起来的 computer-use harness 形态。
 - [Manus](https://manus.im/docs) - 一个通用 sandbox harness，把虚拟电脑、持久文件系统、网络访问和长时执行放进同一个系统。
+- [ax](https://github.com/Necmttn/ax) - 一个面向 coding-agent harness 的本地 telemetry 与 recall 层，可索引 Claude Code、Codex、Cursor、OpenCode 和 Pi 的 sessions、tool calls、skills 与 usage 信号。
 
 ## Report
 

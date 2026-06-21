@@ -92,6 +92,7 @@ Frameworks help you build harnesses. Harnesses are what agents actually run insi
 - [OpenClaw](https://docs.openclaw.ai/index) - A computer-use harness centered on browser control, workspaces, snapshots, and sandbox boundaries.
 - [Responses API + computer environment](https://openai.com/index/equip-responses-api-computer-environment) - A computer-use harness pattern that pairs the model with a real computer environment and tool-driven interaction.
 - [Manus](https://manus.im/docs) - A general-purpose sandbox harness combining a virtual computer, persistent filesystem, network access, and long-running execution.
+- [ax](https://github.com/Necmttn/ax) - A local telemetry and recall layer for coding-agent harnesses, indexing sessions, tool calls, skills, and usage signals across Claude Code, Codex, Cursor, OpenCode, and Pi.
 
 ## Report
 
