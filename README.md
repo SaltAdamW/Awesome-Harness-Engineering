@@ -117,6 +117,7 @@ Frameworks help you build harnesses. Harnesses are what agents actually run insi
 
 ## Research
 
+- [ClawBench](https://github.com/reacher-z/ClawBench) ([project page](https://claw-bench.com/)) - An open benchmark for evaluating browser agents on real-world website tasks, with reproducible task suites, isolated environments, and execution/submission traces.
 - [SafeArena](https://arxiv.org/abs/2503.04957) - A benchmark focused on harmful web-agent behavior and risky task execution.
 - [OS-Harm](https://arxiv.org/abs/2506.14866) - A benchmark for measuring operating-system-level harm in computer-use agents.
 - [CUAHarm](https://arxiv.org/abs/2508.00935) - A benchmark for evaluating harmful computer-use task execution.
